@@ -1,18 +1,34 @@
 
+import time
 import streamlit as st
 import requests
 
 backend_url = "https://mental-health-qa-analysis-with-ml-llm.onrender.com"
 
-# Fetch questions from FastAPI
+# # Fetch questions from FastAPI
+# @st.cache_data
+# def get_questions():
+#     try:
+#         response = requests.get(f"{backend_url}/get-questions")
+#         if response.status_code == 200:
+#             return response.json()
+#     except Exception as e:
+#         st.error(f"❌ Error fetching questions: {e}")
+#     return {}
+
 @st.cache_data
 def get_questions():
-    try:
-        response = requests.get(f"{backend_url}/get-questions")
-        if response.status_code == 200:
-            return response.json()
-    except Exception as e:
-        st.error(f"❌ Error fetching questions: {e}")
+    retries = 5
+    for attempt in range(retries):
+        try:
+            response = requests.get(f"{backend_url}/get-questions")
+            if response.status_code == 200 and response.json():
+                return response.json()
+            else:
+                time.sleep(2)  # Wait and retry
+        except Exception as e:
+            time.sleep(2)
+    st.error("❌ Failed to fetch questions after multiple attempts.")
     return {}
 
 questions = get_questions()
