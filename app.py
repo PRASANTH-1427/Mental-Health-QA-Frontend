@@ -45,7 +45,7 @@ def all_answered(section_key):
 # App title
 st.title("🧠 Mental Health Questionnaire")
 
-st.write("📦 Raw questions data:", questions)
+# st.write("📦 Raw questions data:", questions)
 
 # Step control
 if not questionnaire_keys:
