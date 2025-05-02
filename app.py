@@ -17,6 +17,8 @@ def get_questions():
 
 questions = get_questions()
 
+print("the questions:- ",questions)
+
 # Initialize session state
 if "step" not in st.session_state:
     st.session_state.step = 0
@@ -42,6 +44,8 @@ def all_answered(section_key):
 
 # App title
 st.title("🧠 Mental Health Questionnaire")
+
+st.write("📦 Raw questions data:", questions)
 
 # Step control
 if not questionnaire_keys:
